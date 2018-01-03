@@ -1,9 +1,16 @@
 Package: tissueTreg
-Title: What the Package Does (one line, title case)
+Title: Provide ready to use TWGBS data as bsseq objects
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-Depends: R (>= 3.4.2)
+Authors@R: person("Charles", "Imbusch", email = "cimbusch@dkfz.de", role = c("aut", "cre"))
+Description: The package provides ready to use epigenomes (obtained from TWGBS) and transcriptomes (RNA-seq and scRNA-seq)
+as obtained in the study (Delacher and Imbusch 2017). PMID: 28783152
+Depends: R (>= 3.4.0)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Imports:
+  bsseq,
+  SummarizedExperiment
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
