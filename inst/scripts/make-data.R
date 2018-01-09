@@ -5,7 +5,7 @@ library(data.table)
 # files are read from a custom in-house bed file with CpG context only and read counts from
 # + and - strand have prior to this point already been merged
 
-chromosomes <- c("Y") # c(seq(1,19), "X", "Y")
+chromosomes <- c(seq(1,19), "X", "Y")
 replicates <- c("R1", "R2", "R3")
 tissue_cells <- c("Fat-Treg", "Liver-Treg", "Skin-Treg", "Lymph-N-Tcon", "Lymph-N-Treg")
 # two lists for coverage and methylation info
