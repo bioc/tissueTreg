@@ -5,7 +5,7 @@ library(data.table)
 # files are read from a custom in-house bed file with CpG context only and read counts from
 # + and - strand have prior to this point already been merged
 
-chromosomes <- c(seq(1,19), "X", "Y")
+chromosomes <- c("Y") # c(seq(1,19), "X", "Y")
 replicates <- c("R1", "R2", "R3")
 tissue_cells <- c("Fat-Treg", "Liver-Treg", "Skin-Treg", "Lymph-N-Tcon", "Lymph-N-Treg")
 # two lists for coverage and methylation info
@@ -58,6 +58,13 @@ stopifnot(all(colnames(dm_big_cov) == colnames(dm_big_ureads)))
 BS.obj.ex <- BSseq(M=dm_big_ureads, Cov=dm_big_cov, chr=chrs, pos=positions)
 BS.obj.ex.fit <- BSmooth(BS.obj.ex, mc.cores=24, verbose=TRUE, parallelBy = "chr")
 # TODO: remove this step? saveHDF5SummarizedExperiment does not seem to preserve the smoothing part from bsseq
-BS.obj.ex_hdf5 <- saveHDF5SummarizedExperiment(x = BS.obj.ex, dir = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/SummarizedExperiment/", replace=TRUE)
+# BS.obj.ex_hdf5 <- saveHDF5SummarizedExperiment(x = BS.obj.ex, dir = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/SummarizedExperiment/", replace=TRUE)
 # save as RDS file
-saveRDS(object = BS.obj.ex.fit, file = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/treg_twgbs.rds")
+saveRDS(object = BS.obj.ex.fit, file = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/treg_twgbs_per_sample.rds")
+# collapse the samples into tissue groups, perform smoothing and save
+group_sample_labels <- rep(tissue_cells, rep(3, 5))
+names(group_sample_labels) <- paste(rep(tissue_cells, rep(3, 5)) , replicates, sep="-")
+BS.obj.ex.collapsed <- collapseBSseq(BS.obj.ex, columns = group_sample_labels)
+BS.obj.ex.collapsed.fit <- BSmooth(BS.obj.ex, mc.cores=24, verbose=TRUE, parallelBy = "chr")
+saveRDS(object = BS.obj.ex.fit, file = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/treg_twgbs_per_group.rds")
+
