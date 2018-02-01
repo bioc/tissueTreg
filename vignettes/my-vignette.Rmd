@@ -1,8 +1,10 @@
 ---
-title: "Examples utilizing the DNA methylation and RNA-seq data provided."
+title: "tissueTreg data package"
 author: "Charles Imbusch"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+    BiocStyle::html_document:
+    toc_float: true
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,25 +18,25 @@ knitr::opts_chunk$set(
 )
 ```
 
-## TWGBS data
+# TWGBS data
 
 The DNA methylation data have been stored as rds files and are bsseq objects. They contain the raw counts for each CpG position in the mm10 reference genome as well the preprocessed smoothed values for each sample. In addition there is a second file containing DNA methylation profiles per tissue, e.g. the replicates from the same tissue have been collapsed. Also here the smoothed values have been precomputed and are directly available.
 
-### Example utilization
+## Per sample
 
 We first load necessary libraries and data:
 
-```{r include = FALSE}
+```{r dependencies, warning=FALSE, message=FALSE}
 library(bsseq)
 ```
 
-```{r echo = TRUE}
+```{r loading}
 BS.obj.ex.fit <- readRDS(file = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/treg_twgbs_per_group.rds")
 ```
 
 For example to visually inspect the DNA methylation state of the FoxP3 gene in the CNS2 region we first specify a single region:
 
-```{r echo = TRUE}
+```{r granges}
 regions <- GRanges(
   seqnames = c("X"),
   ranges = IRanges(start = c(7579676),
@@ -43,8 +45,37 @@ regions <- GRanges(
 )
 ```
 
-We can then directly use the plotRegion function from the bsseq package for visualization:
+We can then directly use the plotRegion function from the bsseq package for visualization based on smoothed values:
 
-```{r echo = TRUE}
+```{r plotRegion}
 plotRegion(BS.obj.ex.fit, region=regions[1,], extend = 2000)
+```
+
+We assume that the three sample with higher DNA methylation in CNS2 are the T conventional samples. To check that visually we can color the samples by tissue and cell type.
+
+We check the order in the object first:
+
+```{r check_order}
+colnames(BS.obj.ex.fit)
+```
+
+And assign the colors:
+
+```{r plotRegionColor}
+pData <- pData(BS.obj.ex.fit)
+pData$col <- rep(c("red", "blue", "green", "yellow", "orange"), rep(3,5))
+pData(BS.obj.ex.fit) <- pData
+plotRegion(BS.obj.ex.fit, region=regions[1,], extend = 2000)
+```
+
+This plot is confirming our assumption but we don't have to plot all samples since they seem to be already consistent. We would now like to do the same region using smoothed values for each group.
+
+## Per tissue / cell type
+
+# RNA-seq data
+
+# sessionInfo()
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
 ```
