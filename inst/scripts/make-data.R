@@ -86,7 +86,7 @@ rna_seq$symbol <- as.character(rna_seq$symbol)
 # clean data
 exprData <- as.matrix(rna_seq[, -1])
 # add annotations
-colData <- DataFrame(tissue_cell=rep(c("Fat-Treg", "Liver-Treg", "Lymph-N-Tcon", "Lymph-N-Treg", "Skin-Treg"), 3),
+colData <- DataFrame(tissue_cell=rep(c("Fat-Treg", "Liver-Treg", "Lymph-N-Tcon", "Lymph-N-Treg", "Skin-Treg"), rep(3,5)),
                      row.names = colnames(exprData)
 )
 rowData <- DataFrame(id_symbol=rna_seq$symbol)
@@ -106,7 +106,7 @@ colnames(rna_seq) <- c("EnsemblID",
 )
 exprData <- as.matrix(rna_seq[, -1])
 # add annotations
-colData <- DataFrame(tissue_cell=rep(c("Fat-Treg", "Liver-Treg", "Lymph-N-Tcon", "Lymph-N-Treg", "Skin-Treg"), 3),
+colData <- DataFrame(tissue_cell=rep(c("Fat-Treg", "Liver-Treg", "Lymph-N-Tcon", "Lymph-N-Treg", "Skin-Treg"), rep(3,5) ),
                      row.names = colnames(exprData)
 )
 se <- SummarizedExperiment(assays=list(counts=exprData), colData=colData)

@@ -31,7 +31,7 @@ library(bsseq)
 ```
 
 ```{r loading}
-BS.obj.ex.fit <- readRDS(file = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/treg_twgbs_per_group.rds")
+BS.obj.ex.fit <- readRDS(file = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/treg_twgbs_per_sample.rds")
 ```
 
 For example to visually inspect the DNA methylation state of the FoxP3 gene in the CNS2 region we first specify a single region:
@@ -72,7 +72,71 @@ This plot is confirming our assumption but we don't have to plot all samples sin
 
 ## Per tissue / cell type
 
+The smoothed data has already been precomputed and stored in a another rds file which we first need to load:
+
+```{r loading_group}
+BS.obj.ex.fit.combined <- readRDS(file = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/treg_twgbs_per_group.rds")
+```
+
+```{r check_order_group}
+colnames(BS.obj.ex.fit.combined)
+```
+
+We now only have the tissue and cell type instead of the replicates. We assign the same colors:
+
+```{r plotRegionColor_group}
+pData <- pData(BS.obj.ex.fit.combined)
+pData$col <- c("red", "blue", "green", "yellow", "orange")
+pData(BS.obj.ex.fit.combined) <- pData
+plotRegion(BS.obj.ex.fit.combined, region=regions[1,], extend = 2000)
+```
+
 # RNA-seq data
+
+## Per sample
+
+The RNA-seq experiments are available and as a SummarizedExperiment object. Two objects are available for usage: RPKM values and htseq counts. We will use the RPKM values and would like to look up the expression of FoxP3: 
+
+We load the SummarizedExperiment object:
+
+```{r RNA-seq_loading}
+se_rpkms <- readRDS(file = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/RPKM_table.rds")
+```
+
+EnsemblIDs are given as well as gene symbols:
+
+```{r RNA-seq_structure}
+head(assay(se_rpkms))
+head(rowData(se_rpkms))
+```
+
+We can for example obtain the RPKM values for Foxp3 in this way:
+
+```{r RNA-seq_foxp3}
+assay(se_rpkms)[rowData(se_rpkms)$id_symbol=="Foxp3",]
+```
+
+colData() also contains information about the tissue and cell type the replicate belongs to:
+
+```{r RNA-seq_foxp3_colData}
+head(colData(se_rpkms))
+```
+
+We can put this information together and visualize a simple barplot:
+
+```{r RNA-seq_foxp3_vis}
+library(ggplot2)
+library(reshape2)
+foxp3_rpkm <- assay(se_rpkms)[rowData(se_rpkms)$id_symbol=="Foxp3",]
+foxp3_rpkm_molten <- melt(foxp3_rpkm)
+ggplot(data=foxp3_rpkm_molten, aes(x=rownames(foxp3_rpkm_molten), y=value, fill=colData(se_rpkms)$tissue_cell)) +
+  geom_bar(stat="identity") +
+  theme(axis.text.x=element_text(angle=45, hjust=1)) +
+  xlab("Sample") +
+  ylab("RPKM") +
+  ggtitle("FoxP3 expression") +
+  guides(fill=guide_legend(title="tissue / cell type"))
+```
 
 # sessionInfo()
 
