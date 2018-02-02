@@ -64,7 +64,7 @@ saveRDS(object = BS.obj.ex.fit, file = paste0(maindir, "treg_twgbs_per_sample.rd
 group_sample_labels <- rep(tissue_cells, rep(3, 5))
 names(group_sample_labels) <- paste(rep(tissue_cells, rep(3, 5)) , replicates, sep="-")
 BS.obj.ex.collapsed <- collapseBSseq(BS.obj.ex, columns = group_sample_labels)
-BS.obj.ex.collapsed.fit <- BSmooth(BS.obj.ex, mc.cores=24, verbose=TRUE, parallelBy = "chr")
+BS.obj.ex.collapsed.fit <- BSmooth(BS.obj.ex.collapsed, mc.cores=24, verbose=TRUE, parallelBy = "chr")
 saveRDS(object = BS.obj.ex.collapsed.fit, file = paste0(maindir, "treg_twgbs_per_group.rds"))
 
 ### compiles RNA-seq data
