@@ -27,11 +27,13 @@ The DNA methylation data have been stored as rds files and are bsseq objects. Th
 We first load necessary libraries and data:
 
 ```{r dependencies, warning=FALSE, message=FALSE}
+library(ExperimentHub)
 library(bsseq)
 ```
 
 ```{r loading}
-BS.obj.ex.fit <- readRDS(file = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/treg_twgbs_per_sample.rds")
+eh <- ExperimentHub()
+BS.obj.ex.fit <- query(eh, c("tissueTreg", "treg_twgbs_per_sample.rds"))
 ```
 
 For example to visually inspect the DNA methylation state of the FoxP3 gene in the CNS2 region we first specify a single region:
@@ -75,7 +77,7 @@ This plot is confirming our assumption but we don't have to plot all samples sin
 The smoothed data has already been precomputed and stored in a another rds file which we first need to load:
 
 ```{r loading_group}
-BS.obj.ex.fit.combined <- readRDS(file = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/treg_twgbs_per_group.rds")
+BS.obj.ex.fit.combined <- query(eh, c("tissueTreg", "treg_twgbs_per_group.rds"))
 ```
 
 ```{r check_order_group}
@@ -86,7 +88,7 @@ We now only have the tissue and cell type instead of the replicates. We assign t
 
 ```{r plotRegionColor_group}
 pData <- pData(BS.obj.ex.fit.combined)
-pData$col <- c("red", "blue", "green", "yellow", "orange")
+pData$col <- c("red", "blue", "yellow", "orange", "green")
 pData(BS.obj.ex.fit.combined) <- pData
 plotRegion(BS.obj.ex.fit.combined, region=regions[1,], extend = 2000)
 ```
@@ -100,7 +102,7 @@ The RNA-seq experiments are available and as a SummarizedExperiment object. Two 
 We load the SummarizedExperiment object:
 
 ```{r RNA-seq_loading}
-se_rpkms <- readRDS(file = "/icgc/dkfzlsdf/analysis/G200/imbusch/treg/treg_experimentHub/RPKM_table.rds")
+se_rpkms <- query(eh, c("tissueTreg", "RPKM_table.rds"))
 ```
 
 EnsemblIDs are given as well as gene symbols:
