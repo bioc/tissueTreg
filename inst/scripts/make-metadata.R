@@ -5,10 +5,10 @@
 ## vectors that produced multiple rows in the data.frame.
 
 meta_bsseq_per_sample <- data.frame(
-  Title = "TWGBS dataset from study PMID: 28783152",
-  Description = paste0("TWGBS data from study PMID: 28783152 containing regulatory T cells from four different tissues ",
+  Title = "Bisulfite sequencing data from tissue Tregs (per sample)",
+  Description = paste0("Bisulfite sequencing data (PMID: 28783152) containing regulatory T cells from four different tissues ",
                        "and T conventional cells from a single tissue represented as a ",
-                       "SummarizedExperiment"),
+                       "bsseq object"),
   BiocVersion = "3.7",
   Genome = "mm10",
   SourceType = "BAM",
@@ -25,10 +25,10 @@ meta_bsseq_per_sample <- data.frame(
 )
 
 meta_bsseq_per_group <- data.frame(
-  Title = "TWGBS dataset from study PMID: 28783152",
-  Description = paste0("TWGBS data from study PMID: 28783152 containing regulatory T cells from four different tissues ",
+  Title = "Bisulfite sequencing data from tissue Tregs (per tissue/cell type)",
+  Description = paste0("Bisulfite sequencing data (PMID: 28783152) containing regulatory T cells from four different tissues ",
                        "and T conventional cells from a single tissue represented as a ",
-                       "SummarizedExperiment"),
+                       "bsseq object"),
   BiocVersion = "3.7",
   Genome = "mm10",
   SourceType = "BAM",
@@ -45,8 +45,8 @@ meta_bsseq_per_group <- data.frame(
 )
 
 meta_rna_seq_per_per_sample_rpkm <- data.frame(
-  Title = "RNA-seq dataset from study PMID: 28783152",
-  Description = paste0("RNA-seq data from study PMID: 28783152 containing regulatory T cells from four different tissues ",
+  Title = "RNA-seq data from tissue Tregs (RPKM values)",
+  Description = paste0("RNA-seq data (PMID: 28783152) containing regulatory T cells from four different tissues ",
                        "and T conventional cells from a single tissue represented as a ",
                        "SummarizedExperiment"),
   BiocVersion = "3.7",
@@ -65,8 +65,8 @@ meta_rna_seq_per_per_sample_rpkm <- data.frame(
 )
 
 meta_rna_seq_per_per_sample_htseq <- data.frame(
-  Title = "RNA-seq dataset from study PMID: 28783152",
-  Description = paste0("RNA-seq data from study PMID: 28783152 containing regulatory T cells from four different tissues ",
+  Title = "RNA-seq data from tissue Tregs (htseq values)",
+  Description = paste0("RNA-seq data (PMID: 28783152) containing regulatory T cells from four different tissues ",
                        "and T conventional cells from a single tissue represented as a ",
                        "SummarizedExperiment"),
   BiocVersion = "3.7",
