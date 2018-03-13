@@ -6,9 +6,9 @@ output:
     BiocStyle::html_document:
     toc_float: true
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{tissueTreg}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
@@ -20,7 +20,12 @@ knitr::opts_chunk$set(
 
 # TWGBS data
 
-The DNA methylation data have been stored as rds files and are bsseq objects. They contain the raw counts for each CpG position in the mm10 reference genome as well the preprocessed smoothed values for each sample. In addition there is a second file containing DNA methylation profiles per tissue, e.g. the replicates from the same tissue have been collapsed. Also here the smoothed values have been precomputed and are directly available.
+The DNA methylation data have been stored as rds files and are bsseq objects.
+They contain the raw counts for each CpG position in the mm10 reference genome
+as well the preprocessed smoothed values for each sample. In addition there is
+a second file containing DNA methylation profiles per tissue, e.g. the
+replicates from the same tissue have been collapsed. Also here the smoothed
+values have been precomputed and are directly available.
 
 ## Per sample
 
@@ -33,10 +38,11 @@ library(bsseq)
 
 ```{r loading}
 eh <- ExperimentHub()
-BS.obj.ex.fit <- query(eh, c("tissueTreg", "treg_twgbs_per_sample.rds"))
+BS.obj.ex.fit <- eh[["EH1072"]]
 ```
 
-For example to visually inspect the DNA methylation state of the FoxP3 gene in the CNS2 region we first specify a single region:
+For example to visually inspect the DNA methylation state of the FoxP3 gene in
+the CNS2 region we first specify a single region:
 
 ```{r granges}
 regions <- GRanges(
@@ -47,13 +53,16 @@ regions <- GRanges(
 )
 ```
 
-We can then directly use the plotRegion function from the bsseq package for visualization based on smoothed values:
+We can then directly use the plotRegion function from the bsseq package for
+visualization based on smoothed values:
 
 ```{r plotRegion}
 plotRegion(BS.obj.ex.fit, region=regions[1,], extend = 2000)
 ```
 
-We assume that the three sample with higher DNA methylation in CNS2 are the T conventional samples. To check that visually we can color the samples by tissue and cell type.
+We assume that the three sample with higher DNA methylation in CNS2 are the
+T conventional samples. To check that visually we can color the samples by
+tissue and cell type.
 
 We check the order in the object first:
 
@@ -70,21 +79,25 @@ pData(BS.obj.ex.fit) <- pData
 plotRegion(BS.obj.ex.fit, region=regions[1,], extend = 2000)
 ```
 
-This plot is confirming our assumption but we don't have to plot all samples since they seem to be already consistent. We would now like to do the same region using smoothed values for each group.
+This plot is confirming our assumption but we don't have to plot all samples
+since they seem to be already consistent. We would now like to do the same
+region using smoothed values for each group.
 
 ## Per tissue / cell type
 
-The smoothed data has already been precomputed and stored in a another rds file which we first need to load:
+The smoothed data has already been precomputed and stored in a another rds
+file which we first need to load:
 
 ```{r loading_group}
-BS.obj.ex.fit.combined <- query(eh, c("tissueTreg", "treg_twgbs_per_group.rds"))
+BS.obj.ex.fit.combined <- eh[["EH1073"]]
 ```
 
 ```{r check_order_group}
 colnames(BS.obj.ex.fit.combined)
 ```
 
-We now only have the tissue and cell type instead of the replicates. We assign the same colors:
+We now only have the tissue and cell type instead of the replicates. We assign
+the same colors:
 
 ```{r plotRegionColor_group}
 pData <- pData(BS.obj.ex.fit.combined)
@@ -97,12 +110,14 @@ plotRegion(BS.obj.ex.fit.combined, region=regions[1,], extend = 2000)
 
 ## Per sample
 
-The RNA-seq experiments are available and as a SummarizedExperiment object. Two objects are available for usage: RPKM values and htseq counts. We will use the RPKM values and would like to look up the expression of FoxP3: 
+The RNA-seq experiments are available and as a SummarizedExperiment object.
+Two objects are available for usage: RPKM values and htseq counts. We will use
+the RPKM values and would like to look up the expression of FoxP3: 
 
 We load the SummarizedExperiment object:
 
 ```{r RNA-seq_loading}
-se_rpkms <- query(eh, c("tissueTreg", "RPKM_table.rds"))
+se_rpkms <- eh[["EH1074"]]
 ```
 
 EnsemblIDs are given as well as gene symbols:
@@ -118,7 +133,8 @@ We can for example obtain the RPKM values for Foxp3 in this way:
 assay(se_rpkms)[rowData(se_rpkms)$id_symbol=="Foxp3",]
 ```
 
-colData() also contains information about the tissue and cell type the replicate belongs to:
+colData() also contains information about the tissue and cell type the
+replicate belongs to:
 
 ```{r RNA-seq_foxp3_colData}
 head(colData(se_rpkms))
@@ -132,12 +148,12 @@ library(reshape2)
 foxp3_rpkm <- assay(se_rpkms)[rowData(se_rpkms)$id_symbol=="Foxp3",]
 foxp3_rpkm_molten <- melt(foxp3_rpkm)
 ggplot(data=foxp3_rpkm_molten, aes(x=rownames(foxp3_rpkm_molten), y=value, fill=colData(se_rpkms)$tissue_cell)) +
-  geom_bar(stat="identity") +
-  theme(axis.text.x=element_text(angle=45, hjust=1)) +
-  xlab("Sample") +
-  ylab("RPKM") +
-  ggtitle("FoxP3 expression") +
-  guides(fill=guide_legend(title="tissue / cell type"))
+    geom_bar(stat="identity") +
+    theme(axis.text.x=element_text(angle=45, hjust=1)) +
+    xlab("Sample") +
+    ylab("RPKM") +
+    ggtitle("FoxP3 expression") +
+    guides(fill=guide_legend(title="tissue / cell type"))
 ```
 
 # sessionInfo()
