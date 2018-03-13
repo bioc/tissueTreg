@@ -2,10 +2,15 @@ Package: tissueTreg
 Title: TWGBS and RNA-seq data from tissue T regulatory cells from mice
 Version: 0.0.0.9000
 Authors@R:
-  c(person("Charles", "Imbusch", email = "cimbusch@dkfz.de", role = c("aut", "cre")),
-  person("Michael", "Delacher", email = "michael.delacher@ukr.de", role = "aut"))
+  c(
+  person("Charles", "Imbusch", email = "c.imbusch@dkfz.de", role = c("aut", "cre")),
+  person("Michael", "Delacher", email = "michael.delacher@ukr.de", role = c("aut")) 
+  )
+Author: Charles Imbusch [aut, cre],
+  Michael Delacher [aut]
+Maintainer: Charles Imbusch <c.imbusch@dkfz.de>
 Description: The package provides ready to use epigenomes (obtained from TWGBS) and transcriptomes (RNA-seq)
-from various tissues as obtained in the study (Delacher and Imbusch 2017). PMID: 28783152
+  from various tissues as obtained in the study (Delacher and Imbusch 2017). PMID: 28783152
 Depends: R (>= 3.4.2)
 License: GPL (>= 2)
 Encoding: UTF-8
