@@ -30,6 +30,7 @@ Suggests:
   knitr,
   rmarkdown,
   testthat,
+  ExperimentHub,
   bsseq,
   SummarizedExperiment
 VignetteBuilder:

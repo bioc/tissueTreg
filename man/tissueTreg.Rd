@@ -22,8 +22,7 @@ Delacher, M, Imbusch, CD, Weichenhan, D, Breiling, A, Hotz-Wagenblatt, A, Träge
 %%  ~~ possibly secondary sources and usages ~~
 }
 \examples{
-library(ExperimentHub)
-eh <- ExperimentHub()
+eh <- ExperimentHub::ExperimentHub()
 se_rpkms <- eh[["EH1074"]]
 }
 \keyword{datasets}
