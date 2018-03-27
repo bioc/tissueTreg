@@ -13,19 +13,25 @@ Author: Charles Imbusch [aut, cre],
   Markus Feuerer [aut],
   Benedikt Brors [aut]
 Maintainer: Charles Imbusch <c.imbusch@dkfz.de>
-Description: The package provides ready to use epigenomes (obtained from TWGBS) and transcriptomes (RNA-seq)
-  from various tissues as obtained in the study (Delacher and Imbusch 2017). PMID: 28783152
+Description: The package provides ready to use epigenomes (obtained from TWGBS)
+  and transcriptomes (RNA-seq) from various tissues as obtained in the study
+  (Delacher and Imbusch 2017, PMID: 28783152).
+  Regulatory T cells (Treg cells) perform two distinct functions: they maintain
+  self-tolerance, and they support organ homeostasis by differentiating into
+  specialized tissue Treg cells. The underlying dataset characterises the epigenetic
+  and transcriptomic modifications for specialized tissue Treg cells.
 Depends: R (>= 3.5)
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
 Imports:
-  bsseq,
-  SummarizedExperiment
 Suggests:
   BiocStyle,
   knitr,
-  rmarkdown
+  rmarkdown,
+  testthat,
+  bsseq,
+  SummarizedExperiment
 VignetteBuilder:
   knitr
 biocViews:
