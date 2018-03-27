@@ -23,8 +23,7 @@ Delacher, M, Imbusch, CD, Weichenhan, D, Breiling, A, Hotz-Wagenblatt, A, Träge
 }
 \examples{
 library(ExperimentHub)
-library(bsseq)
 eh <- ExperimentHub()
-BS.obj.ex.fit <- eh[["EH1072"]]
+se_rpkms <- eh[["EH1074"]]
 }
 \keyword{datasets}
