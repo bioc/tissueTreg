@@ -12,19 +12,11 @@ self-tolerance, and they support organ homeostasis by differentiating into
 specialized tissue Treg cells. The underlying dataset characterises the epigenetic
 and transcriptomic modifications for specialized tissue Treg cells.
 }
-\usage{data("tissueTreg")}
-\format{
-  A data frame with 0 observations on the following 2 variables.
-  \describe{
-    \item{\code{x}}{a numeric vector}
-    \item{\code{y}}{a numeric vector}
-  }
-}
 \details{
 %%  ~~ If necessary, more details than the __description__ above ~~
 }
 \source{
-Delacher and Imbusch 2017, PMID: 28783152
+Delacher, M, Imbusch, CD, Weichenhan, D, Breiling, A, Hotz-Wagenblatt, A, Träger, U, Hofer, AC, Kägebein, D, Wang, Q, Frauhammer, F, Mallm, JP, Bauer, K, Herrmann, C, Lang, PA, Brors, B, Plass, C, Feuerer, M (2017). Genome-wide DNA-methylation landscape defines specialization of regulatory T cells in tissues. Nat. Immunol., 18, 10:1160-1172.
 }
 \references{
 %%  ~~ possibly secondary sources and usages ~~
