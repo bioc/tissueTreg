@@ -1,3 +1,9 @@
+CHANGES IN VERSION 0.99.1
+
+* changes to comply with Bioconductor package guide lines
+
+===========================
+
 CHANGES IN VERSION 0.99.0
 
 * First release
