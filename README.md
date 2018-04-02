@@ -1,5 +1,12 @@
 # tissue T regulatory cells and T conventional cells
-This is a data package for ExperimentHub.
+
+## Usage
+
+This is a data package currently included in the developement version of Bioconductor.
+
+For installation instruction please check:
+
+https://bioconductor.org/packages/devel/data/experiment/html/tissueTreg.html
 
 ## DNA methylation
 
