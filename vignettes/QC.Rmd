@@ -1,0 +1,84 @@
+---
+title: "tissueTreg QC"
+author: "Charles Imbusch"
+date: "`r Sys.Date()`"
+output:
+    BiocStyle::html_document:
+    toc_float: true
+vignette: >
+    %\VignetteIndexEntry{tissueTreg}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r dependencies, warning=FALSE, message=FALSE}
+library(ExperimentHub)
+library(bsseq)
+```
+
+Load TWGBS data per tissue (pooled samples) and per sample:
+
+```{r loading}
+eh <- ExperimentHub()
+BS.obj.ex.fit_per_tissue <- eh[["EH1073"]]
+BS.obj.ex.fit_per_sample <- eh[["EH1072"]]
+```
+Check beta value plot per sample:
+
+```{r plotBetaValueDistributionPerTissue}
+pData <- pData(BS.obj.ex.fit_per_sample)
+pData$col <- rep(c("red", "blue", "yellow", "orange", "green"),rep(3,5))
+pData(BS.obj.ex.fit_per_sample) <- pData
+#plotRegion(BS.obj.ex.fit, region=regions[1,], extend = 2000)
+
+library(reshape2)
+library(ggplot2)
+BS.obj.ex.fit_subset <- BS.obj.ex.fit_per_sample
+# extract the methylation values
+meth_per_cpg <- getMeth(BS.obj.ex.fit_subset, type = "smooth")
+# from wide to long format
+meth_per_cpg_melted <- melt(as.matrix(meth_per_cpg))
+# plot "histogram" (frequency polygons) of beta values for each sample 
+ggplot(meth_per_cpg_melted, aes(x=value, group=Var2, col=Var2)) +
+  geom_freqpoly(binwidth = 0.01) +
+  facet_wrap( ~Var2, ncol = 3, nrow = 5)
+```
+
+Check beta value plot per tissue:
+
+```{r plotBetaValueDistributionPerTissue}
+pData <- pData(BS.obj.ex.fit_per_tissue)
+pData$col <- c("red", "blue", "yellow", "orange", "green")
+pData(BS.obj.ex.fit_per_tissue) <- pData
+#plotRegion(BS.obj.ex.fit, region=regions[1,], extend = 2000)
+
+library(reshape2)
+library(ggplot2)
+# only for chromosome 22
+# BS.obj.ex.fit_subset <- subsetByOverlaps(BS.obj.ex.fit, 
+#                              GRanges(seqnames = "12", 
+#                              ranges = IRanges(start = 1, end = 2*10^7) ))
+BS.obj.ex.fit_subset <- BS.obj.ex.fit_per_tissue
+# extract the methylation values
+meth_per_cpg <- getMeth(BS.obj.ex.fit_subset, type = "smooth")
+# from wide to long format
+meth_per_cpg_melted <- melt(as.matrix(meth_per_cpg))
+# plot "histogram" (frequency polygons) of beta values for each sample 
+ggplot(meth_per_cpg_melted, aes(x=value, group=Var2, col=Var2)) +
+  geom_freqpoly(binwidth = 0.01)
+#  facet_wrap( ~Var2, ncol = 2)
+```
+
+# sessionInfo()
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
