@@ -17,6 +17,12 @@ Delacher, M, Imbusch, CD, Weichenhan, D, Breiling, A, Hotz-Wagenblatt, A, Träge
 }
 \examples{
 eh <- ExperimentHub::ExperimentHub()
+
+RNA-seq RPKM data:
 se_rpkms <- eh[["EH1074"]]
+
+Whole genome bisulfite sequencing data as bsseq objects:
+tregs_per_sample <- eh[["EH1072"]]
+tregs_per_tissue <- eh[["EH1073"]]
 }
 \keyword{datasets}
