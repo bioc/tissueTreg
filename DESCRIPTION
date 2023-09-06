@@ -34,7 +34,8 @@ Suggests:
   testthat,
   ExperimentHub,
   bsseq,
-  SummarizedExperiment
+  SummarizedExperiment,
+  ggplot2
 VignetteBuilder:
   knitr
 biocViews:
