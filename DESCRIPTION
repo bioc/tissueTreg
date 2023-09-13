@@ -1,6 +1,6 @@
 Package: tissueTreg
 Title: TWGBS and RNA-seq data from tissue T regulatory cells from mice
-Version: 1.21.2
+Version: 1.21.3
 Authors@R:
   c(
   person("Charles", "Imbusch", email = "c.imbusch@dkfz.de", role = c("aut", "cre")),
@@ -21,8 +21,7 @@ Description: The package provides ready to use epigenomes (obtained from TWGBS)
   specialized tissue Treg cells. The underlying dataset characterises the epigenetic
   and transcriptomic modifications for specialized tissue Treg cells.
 Depends:
-  R (>= 3.5),
-  magick
+  R (>= 3.5)
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
