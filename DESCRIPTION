@@ -1,6 +1,6 @@
 Package: tissueTreg
 Title: TWGBS and RNA-seq data from tissue T regulatory cells from mice
-Version: 1.21.4
+Version: 1.21.5
 Authors@R:
   c(
   person("Charles", "Imbusch", email = "c.imbusch@dkfz.de", role = c("aut", "cre")),
